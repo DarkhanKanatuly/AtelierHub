@@ -67,8 +67,25 @@ builder.Services.AddAuthentication(options =>
 builder.Services.AddAuthorization();
 
 // Add database context
+var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
+var herokuDbUrl = Environment.GetEnvironmentVariable("DATABASE_URL");
+
+if (!string.IsNullOrEmpty(herokuDbUrl))
+{
+    // Форматируем строку подключения из формата Heroku в формат Npgsql
+    var uri = new Uri(herokuDbUrl);
+    var userInfo = uri.UserInfo.Split(':');
+    var username = userInfo[0];
+    var password = userInfo[1];
+    var host = uri.Host;
+    var port = uri.Port;
+    var database = uri.PathAndQuery.TrimStart('/');
+
+    connectionString = $"Host={host};Port={port};Database={database};Username={username};Password={password};SSL Mode=Require;Trust Server Certificate=true";
+}
+
 builder.Services.AddDbContext<AtelierHubContext>(options =>
-    options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
+    options.UseNpgsql(connectionString));
 
 var app = builder.Build();
 
