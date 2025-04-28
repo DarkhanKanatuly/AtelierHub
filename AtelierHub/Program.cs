@@ -18,6 +18,9 @@ builder.Services.AddControllersWithViews(options =>
     options.Filters.Add<LogActionFilter>();
 });
 
+// Add HttpClientFactory
+builder.Services.AddHttpClient(); // Добавляем IHttpClientFactory
+
 // Add localization
 builder.Services.AddLocalization(options => options.ResourcesPath = "Resources");
 builder.Services.AddControllersWithViews()
@@ -83,7 +86,7 @@ if (!string.IsNullOrEmpty(herokuDbUrl))
     var username = userInfo[0];
     var password = userInfo[1];
     var host = uri.Host;
-    var dbPort = uri.Port; // Переименовано в dbPort, чтобы избежать конфликта
+    var dbPort = uri.Port;
     var database = uri.PathAndQuery.TrimStart('/');
 
     connectionString = $"Host={host};Port={dbPort};Database={database};Username={username};Password={password};SSL Mode=Require;Trust Server Certificate=true";
