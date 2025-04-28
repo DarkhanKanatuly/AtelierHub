@@ -56,3 +56,20 @@ body {
   background-color: #4a2e87;
   border-color: #4a2e87;
 }
+
+body {
+  background-color: #f8f9fa;
+}
+
+.master-item {
+  margin-bottom: 20px;
+  padding: 15px;
+  background-color: white;
+  border-radius: 5px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.master-item img {
+  max-width: 100px;
+  border-radius: 5px;
+}

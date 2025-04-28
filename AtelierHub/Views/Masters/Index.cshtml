@@ -5,18 +5,20 @@
 
 @if (Model.Any())
 {
-    <ul>
+    <div class="row">
         @foreach (var master in Model)
         {
-            <li>
-                <h3>@master.Name</h3>
-                <p>@Localizer["Specialty"]: @master.Specialty</p>
-                <p>@Localizer["Description"]: @master.Description</p>
-                <img src="@master.ImageUrl" alt="@master.Name" width="100" />
-                <p>@Localizer["Contact"]: @master.ContactEmail</p>
-            </li>
+            <div class="col-md-6">
+                <div class="master-item">
+                    <h3>@master.Name</h3>
+                    <p>@Localizer["Specialty"]: @master.Specialty</p>
+                    <p>@Localizer["Description"]: @master.Description</p>
+                    <img src="@master.ImageUrl" alt="@master.Name" />
+                    <p>@Localizer["Contact"]: @master.ContactEmail</p>
+                </div>
+            </div>
         }
-    </ul>
+    </div>
 }
 else
 {
