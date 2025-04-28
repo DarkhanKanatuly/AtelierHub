@@ -1,43 +1,38 @@
-@model AtelierHub.Models.MasterViewModel
-
-@{
-    ViewData["Title"] = "Create Master";
-}
-
-<h1>Create Master</h1>
+@model AtelierHub.Models.Master
+@inject Microsoft.AspNetCore.Mvc.Localization.IViewLocalizer Localizer
+<h1>@Localizer["CreateMaster"]</h1>
 
 <form asp-action="Create" method="post">
-    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-    <div class="mb-3">
-        <label asp-for="Name" class="form-label"></label>
+    <div class="form-group">
+        <label asp-for="Name" class="control-label"></label>
         <input asp-for="Name" class="form-control" />
         <span asp-validation-for="Name" class="text-danger"></span>
     </div>
-    <div class="mb-3">
-        <label asp-for="Specialty" class="form-label"></label>
+    <div class="form-group">
+        <label asp-for="Specialty" class="control-label"></label>
         <input asp-for="Specialty" class="form-control" />
         <span asp-validation-for="Specialty" class="text-danger"></span>
     </div>
-    <div class="mb-3">
-        <label asp-for="Description" class="form-label"></label>
-        <textarea asp-for="Description" class="form-control" rows="3"></textarea>
+    <div class="form-group">
+        <label asp-for="Description" class="control-label"></label>
+        <textarea asp-for="Description" class="form-control"></textarea>
         <span asp-validation-for="Description" class="text-danger"></span>
     </div>
-    <div class="mb-3">
-        <label asp-for="ImageUrl" class="form-label"></label>
+    <div class="form-group">
+        <label asp-for="ImageUrl" class="control-label"></label>
         <input asp-for="ImageUrl" class="form-control" />
         <span asp-validation-for="ImageUrl" class="text-danger"></span>
     </div>
-    <div class="mb-3">
-        <label asp-for="ContactEmail" class="form-label"></label>
+    <div class="form-group">
+        <label asp-for="ContactEmail" class="control-label"></label>
         <input asp-for="ContactEmail" class="form-control" />
         <span asp-validation-for="ContactEmail" class="text-danger"></span>
     </div>
-    <button type="submit" class="btn btn-primary">Create</button>
-    <a asp-action="Index" class="btn btn-secondary">Back to List</a>
+    <div class="form-group">
+        <input type="submit" value="@Localizer["Create"]" class="btn btn-primary" />
+    </div>
 </form>
 
 @section Scripts {
-    <script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
-    <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
+    <partial name="_ValidationScriptsPartial" />
 }

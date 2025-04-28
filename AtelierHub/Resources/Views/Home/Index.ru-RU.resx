@@ -5,4 +5,22 @@
   <data name="FindMasters" xml:space="preserve">
     <value>Найдите лучших мастеров, чтобы создать свой уникальный стиль.</value>
   </data>
+  <data name="Masters" xml:space="preserve">
+    <value>Мастера</value>
+  </data>
+  <data name="Specialty" xml:space="preserve">
+    <value>Специальность</value>
+  </data>
+  <data name="Description" xml:space="preserve">
+    <value>Описание</value>
+  </data>
+  <data name="Contact" xml:space="preserve">
+    <value>Контакт</value>
+  </data>
+  <data name="NoMasters" xml:space="preserve">
+    <value>Мастеров нет</value>
+  </data>
+  <data name="LoadMastersViaApi" xml:space="preserve">
+    <value>Загрузить мастеров через API</value>
+  </data>
 </root>

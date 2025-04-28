@@ -5,4 +5,22 @@
   <data name="FindMasters" xml:space="preserve">
     <value>Find the best masters to create your unique style.</value>
   </data>
+  <data name="Masters" xml:space="preserve">
+    <value>Masters</value>
+  </data>
+  <data name="Specialty" xml:space="preserve">
+    <value>Specialty</value>
+  </data>
+  <data name="Description" xml:space="preserve">
+    <value>Description</value>
+  </data>
+  <data name="Contact" xml:space="preserve">
+    <value>Contact</value>
+  </data>
+  <data name="NoMasters" xml:space="preserve">
+    <value>No masters available</value>
+  </data>
+  <data name="LoadMastersViaApi" xml:space="preserve">
+    <value>Load Masters via API</value>
+  </data>
 </root>
