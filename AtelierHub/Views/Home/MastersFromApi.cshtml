@@ -1,0 +1,23 @@
+@model IEnumerable<AtelierHub.Models.Master>
+
+@{
+    ViewData["Title"] = "Masters from API";
+}
+
+<h1>Masters from API</h1>
+
+<div class="row">
+    @foreach (var master in Model)
+    {
+        <div class="col-md-4 mb-4">
+            <div class="card">
+                <img src="@master.ImageUrl" class="card-img-top" alt="@master.Name" style="height: 200px; object-fit: cover;">
+                <div class="card-body">
+                    <h5 class="card-title">@master.Name</h5>
+                    <p class="card-text text-muted">@master.Specialty</p>
+                    <p class="card-text">@master.Description</p>
+                </div>
+            </div>
+        </div>
+    }
+</div>

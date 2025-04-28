@@ -1,0 +1,70 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - AtelierHub</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+</head>
+<body>
+    <header>
+        <nav class="navbar navbar-expand-lg navbar-light bg-light shadow-sm">
+            <div class="container">
+                <a class="navbar-brand" href="/">
+                    <span class="fw-bold" style="color: #6A4CAF;">AtelierHub</span>
+                </a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav me-auto">
+                        <li class="nav-item">
+                            <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" asp-area="" asp-controller="Masters" asp-action="Index">Masters</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+                        </li>
+                    </ul>
+                    <ul class="navbar-nav">
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="languageDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                Language
+                            </a>
+                            <ul class="dropdown-menu" aria-labelledby="languageDropdown">
+                                <li>
+                                    <a class="dropdown-item" href="@Url.Action("SetLanguage", "Home", new { culture = "en-US", returnUrl = Context.Request.Path + Context.Request.QueryString })">English</a>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item" href="@Url.Action("SetLanguage", "Home", new { culture = "ru-RU", returnUrl = Context.Request.Path + Context.Request.QueryString })">Русский</a>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                    <partial name="_LoginPartial" />
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <div class="container mt-4">
+        <main role="main">
+            @RenderBody()
+        </main>
+    </div>
+
+    <footer class="bg-light mt-5 py-3">
+        <div class="container text-center">
+            <p>&copy; 2025 AtelierHub. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script src="~/lib/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

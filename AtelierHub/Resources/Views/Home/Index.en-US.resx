@@ -1,0 +1,8 @@
+<root>
+  <data name="WelcomeMessage" xml:space="preserve">
+    <value>Welcome to AtelierHub</value>
+  </data>
+  <data name="FindMasters" xml:space="preserve">
+    <value>Find the best masters to create your unique style.</value>
+  </data>
+</root>
