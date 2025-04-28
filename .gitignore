@@ -1,5 +1,3 @@
 # Игнорировать временные файлы сборки
 AtelierHub/obj/
-AtelierHub/obj/Debug/net8.0/AtelierHub.AssemblyInfo.cs
-AtelierHub/obj/Debug/net8.0/AtelierHub.AssemblyInfoInputs.cache
 AtelierHub/bin/
