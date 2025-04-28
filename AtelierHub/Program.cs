@@ -83,10 +83,10 @@ if (!string.IsNullOrEmpty(herokuDbUrl))
     var username = userInfo[0];
     var password = userInfo[1];
     var host = uri.Host;
-    var port = uri.Port;
+    var dbPort = uri.Port; // Переименовано в dbPort, чтобы избежать конфликта
     var database = uri.PathAndQuery.TrimStart('/');
 
-    connectionString = $"Host={host};Port={port};Database={database};Username={username};Password={password};SSL Mode=Require;Trust Server Certificate=true";
+    connectionString = $"Host={host};Port={dbPort};Database={database};Username={username};Password={password};SSL Mode=Require;Trust Server Certificate=true";
 }
 
 builder.Services.AddDbContext<AtelierHubContext>(options =>
