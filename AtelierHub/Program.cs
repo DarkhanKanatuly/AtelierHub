@@ -8,6 +8,7 @@ using AtelierHub.Middleware;
 using AtelierHub.Filters;
 using Microsoft.AspNetCore.Localization;
 using System.Globalization;
+using Microsoft.AspNetCore.DataProtection;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -66,26 +67,35 @@ builder.Services.AddAuthentication(options =>
 
 builder.Services.AddAuthorization();
 
+// Configure Data Protection
+var dataProtectionKey = Environment.GetEnvironmentVariable("DATA_PROTECTION_KEY") ?? "DefaultKeyForLocalDevelopment";
+builder.Services.AddDataProtection()
+    .PersistKeysToFileSystem(new DirectoryInfo("/app/.aspnet/DataProtection-Keys"))
+    .ProtectKeysWithDpapiNG();
+
 // Add database context
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
 var herokuDbUrl = Environment.GetEnvironmentVariable("DATABASE_URL");
 
 if (!string.IsNullOrEmpty(herokuDbUrl))
 {
-    // Форматируем строку подключения из формата Heroku в формат Npgsql
     var uri = new Uri(herokuDbUrl);
     var userInfo = uri.UserInfo.Split(':');
     var username = userInfo[0];
     var password = userInfo[1];
     var host = uri.Host;
-    var port = uri.Port;
+    var dbPort = uri.Port; // Переименовали port в dbPort
     var database = uri.PathAndQuery.TrimStart('/');
 
-    connectionString = $"Host={host};Port={port};Database={database};Username={username};Password={password};SSL Mode=Require;Trust Server Certificate=true";
+    connectionString = $"Host={host};Port={dbPort};Database={database};Username={username};Password={password};SSL Mode=Require;Trust Server Certificate=true";
 }
 
 builder.Services.AddDbContext<AtelierHubContext>(options =>
     options.UseNpgsql(connectionString));
+
+// Configure the port for Heroku
+var port = Environment.GetEnvironmentVariable("PORT") ?? "8080";
+builder.WebHost.UseUrls($"http://*:{port}");
 
 var app = builder.Build();
 
