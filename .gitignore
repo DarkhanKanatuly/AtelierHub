@@ -1,0 +1,3 @@
+# Игнорировать временные файлы сборки
+AtelierHub/obj/
+AtelierHub/bin/
