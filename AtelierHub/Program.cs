@@ -70,8 +70,7 @@ builder.Services.AddAuthorization();
 // Configure Data Protection
 var dataProtectionKey = Environment.GetEnvironmentVariable("DATA_PROTECTION_KEY") ?? "DefaultKeyForLocalDevelopment";
 builder.Services.AddDataProtection()
-    .PersistKeysToFileSystem(new DirectoryInfo("/app/.aspnet/DataProtection-Keys"))
-    .ProtectKeysWithDpapiNG();
+    .PersistKeysToFileSystem(new DirectoryInfo("/app/.aspnet/DataProtection-Keys"));
 
 // Add database context
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
@@ -84,10 +83,10 @@ if (!string.IsNullOrEmpty(herokuDbUrl))
     var username = userInfo[0];
     var password = userInfo[1];
     var host = uri.Host;
-    var dbPort = uri.Port; // Переименовали port в dbPort
+    var port = uri.Port;
     var database = uri.PathAndQuery.TrimStart('/');
 
-    connectionString = $"Host={host};Port={dbPort};Database={database};Username={username};Password={password};SSL Mode=Require;Trust Server Certificate=true";
+    connectionString = $"Host={host};Port={port};Database={database};Username={username};Password={password};SSL Mode=Require;Trust Server Certificate=true";
 }
 
 builder.Services.AddDbContext<AtelierHubContext>(options =>
