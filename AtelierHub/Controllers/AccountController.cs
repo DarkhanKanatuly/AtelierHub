@@ -15,40 +15,39 @@ namespace AtelierHub.Controllers
         }
 
         [HttpPost]
-[IgnoreAntiforgeryToken] // Отключил Antiforgery
-public async Task<IActionResult> Login(LoginViewModel model, string returnUrl = null)
-{
-    if (ModelState.IsValid)
-    {
-        if (model.Username == "admin" && model.Password == "password")
+        [IgnoreAntiforgeryToken] // Отключаем Antiforgery из-за проблем с Data Protection на Heroku
+        public async Task<IActionResult> Login(LoginViewModel model, string returnUrl = null)
         {
-            var claims = new List<Claim>
+            if (ModelState.IsValid)
             {
-                new Claim(ClaimTypes.Name, model.Username),
-                new Claim(ClaimTypes.Role, "Admin")
-            };
+                if (model.Username == "admin" && model.Password == "password")
+                {
+                    var claims = new List<Claim>
+                    {
+                        new Claim(ClaimTypes.Name, model.Username),
+                        new Claim(ClaimTypes.Role, "Admin")
+                    };
 
-            var claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
-            var authProperties = new AuthenticationProperties
-            {
-                IsPersistent = true,
-                ExpiresUtc = DateTimeOffset.UtcNow.AddMinutes(30)
-            };
+                    var claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
+                    var authProperties = new AuthenticationProperties
+                    {
+                        IsPersistent = true,
+                        ExpiresUtc = DateTimeOffset.UtcNow.AddMinutes(30)
+                    };
 
-            await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme,
-                new ClaimsPrincipal(claimsIdentity),
-                authProperties);
+                    await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme,
+                        new ClaimsPrincipal(claimsIdentity),
+                        authProperties);
 
-#pragma warning disable CS8604 // Возможно, аргумент-ссылка, допускающий значение NULL.
                     return LocalRedirect(returnUrl ?? Url.Action("Index", "Home"));
-#pragma warning restore CS8604 // Возможно, аргумент-ссылка, допускающий значение NULL.
                 }
 
-        ModelState.AddModelError(string.Empty, "Invalid login attempt.");
-    }
+                ModelState.AddModelError(string.Empty, "Invalid login attempt.");
+            }
 
-    return View(model);
-}
+            return View(model);
+        }
+
         public async Task<IActionResult> Logout()
         {
             await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);

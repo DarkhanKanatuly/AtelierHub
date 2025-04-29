@@ -1,10 +1,4 @@
 <root>
-  <data name="WelcomeMessage" xml:space="preserve">
-    <value>Добро пожаловать в AtelierHub</value>
-  </data>
-  <data name="FindMasters" xml:space="preserve">
-    <value>Найдите лучших мастеров, чтобы создать свой уникальный стиль.</value>
-  </data>
   <data name="Masters" xml:space="preserve">
     <value>Мастера</value>
   </data>
@@ -20,7 +14,7 @@
   <data name="NoMasters" xml:space="preserve">
     <value>Мастеров нет</value>
   </data>
-  <data name="Load Masters Via Api" xml:space="preserve">
+  <data name="LoadMastersViaApi" xml:space="preserve">
     <value>Загрузить мастеров через API</value>
   </data>
 </root>

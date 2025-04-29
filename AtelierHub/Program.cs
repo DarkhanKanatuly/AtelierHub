@@ -1,9 +1,6 @@
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.EntityFrameworkCore;
 using AtelierHub.Data;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.IdentityModel.Tokens;
-using System.Text;
 using AtelierHub.Middleware;
 using AtelierHub.Filters;
 using Microsoft.AspNetCore.Localization;
@@ -19,7 +16,7 @@ builder.Services.AddControllersWithViews(options =>
 });
 
 // Add HttpClientFactory
-builder.Services.AddHttpClient(); // Добавляем IHttpClientFactory
+builder.Services.AddHttpClient();
 
 // Add localization
 builder.Services.AddLocalization(options => options.ResourcesPath = "Resources");
@@ -39,40 +36,25 @@ builder.Services.Configure<RequestLocalizationOptions>(options =>
     options.SupportedUICultures = supportedCultures;
 });
 
+// Add authentication for cookies
 builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
     .AddCookie(options =>
     {
         options.LoginPath = "/Account/Login";
         options.LogoutPath = "/Account/Logout";
         options.AccessDeniedPath = "/Account/AccessDenied";
-    });
-
-
-builder.Services.AddAuthentication(options =>
-{
-    options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-    options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-}) // мб удалить надо 
-.AddJwtBearer(options =>
-    {
-        options.TokenValidationParameters = new TokenValidationParameters
-        {
-            ValidateIssuer = true,
-            ValidateAudience = true,
-            ValidateLifetime = true,
-            ValidateIssuerSigningKey = true,
-            ValidIssuer = builder.Configuration["Jwt:Issuer"],
-            ValidAudience = builder.Configuration["Jwt:Audience"],
-            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Key"]))
-        };
+        options.Cookie.SameSite = SameSiteMode.Lax; // Устанавливаем SameSite для совместимости
+        options.Cookie.HttpOnly = true;
+        options.Cookie.SecurePolicy = CookieSecurePolicy.Always;
     });
 
 builder.Services.AddAuthorization();
 
 // Configure Data Protection
-var dataProtectionKey = Environment.GetEnvironmentVariable("DATA_PROTECTION_KEY") ?? "DefaultKeyForLocalDevelopment";
 builder.Services.AddDataProtection()
-    .PersistKeysToFileSystem(new DirectoryInfo("/app/.aspnet/DataProtection-Keys"));
+    .SetApplicationName("AtelierHub")
+    .PersistKeysToFileSystem(new DirectoryInfo("/app/.aspnet/DataProtection-Keys"))
+    .SetDefaultKeyLifetime(TimeSpan.FromDays(90));
 
 // Add database context
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");

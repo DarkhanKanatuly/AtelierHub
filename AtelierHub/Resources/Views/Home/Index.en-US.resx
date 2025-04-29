@@ -1,10 +1,4 @@
 <root>
-  <data name="WelcomeMessage" xml:space="preserve">
-    <value>Welcome to AtelierHub</value>
-  </data>
-  <data name="FindMasters" xml:space="preserve">
-    <value>Find the best masters to create your unique style.</value>
-  </data>
   <data name="Masters" xml:space="preserve">
     <value>Masters</value>
   </data>
@@ -20,7 +14,7 @@
   <data name="NoMasters" xml:space="preserve">
     <value>No masters available</value>
   </data>
-  <data name="Load Masters Via Api" xml:space="preserve">
+  <data name="LoadMastersViaApi" xml:space="preserve">
     <value>Load Masters via API</value>
   </data>
 </root>

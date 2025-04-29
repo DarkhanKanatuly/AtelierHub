@@ -1,61 +1,7 @@
-﻿@using Microsoft.AspNetCore.Mvc.Localization
-@model dynamic
-@inject IViewLocalizer Localizer
-
-@{
-    ViewData["Title"] = "Home Page";
-}
+﻿@inject Microsoft.AspNetCore.Mvc.Localization.IViewLocalizer Localizer
 
 <div class="text-center">
     <h1 class="display-4">@Localizer["WelcomeMessage"]</h1>
-    <p>@Localizer["FindMasters"]</p>
+    <p class="lead">@Localizer["FindMasters"]</p>
+    <a class="btn btn-primary btn-lg mt-3" asp-controller="Masters" asp-action="Index">@Localizer["Masters"]</a>
 </div>
-
-<div class="row" id="mastersList"></div>
-
-@section Scripts {
-    <script>
-        $(document).ready(function () {
-            $.ajax({
-                url: '/api/auth/login',
-                method: 'POST',
-                contentType: 'application/json',
-                data: JSON.stringify({ username: 'admin', password: 'password' }),
-                success: function (response) {
-                    var token = response.token;
-
-                    $.ajax({
-                        url: '/api/masters',
-                        method: 'GET',
-                        headers: {
-                            'Authorization': 'Bearer ' + token
-                        },
-                        success: function (data) {
-                            var mastersList = $('#mastersList');
-                            data.forEach(function (master) {
-                                var card = `
-                                    <div class="col-md-4 mb-4">
-                                        <div class="card">
-                                            <img src="${master.imageUrl}" class="card-img-top" alt="${master.name}" style="height: 200px; object-fit: cover;">
-                                            <div class="card-body">
-                                                <h5 class="card-title">${master.name}</h5>
-                                                <p class="card-text text-muted">${master.specialty}</p>
-                                                <p class="card-text">${master.description}</p>
-                                            </div>
-                                        </div>
-                                    </div>`;
-                                mastersList.append(card);
-                            });
-                        },
-                        error: function () {
-                            alert('Error fetching masters.');
-                        }
-                    });
-                },
-                error: function () {
-                    alert('Error logging in.');
-                }
-            });
-        });
-    </script>
-}

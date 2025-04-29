@@ -29,30 +29,5 @@ else
 <div id="mastersApiResult"></div>
 
 @section Scripts {
-    <script>
-        $(document).ready(function () {
-            $("#loadMastersBtn").click(function () {
-                $.ajax({
-                    url: "/api/MastersApi",
-                    method: "GET",
-                    success: function (data) {
-                        let result = "<h3>Masters from API:</h3><ul>";
-                        data.forEach(function (master) {
-                            result += `<li>${master.name} - ${master.specialty}</li>`;
-                        });
-                        result += "</ul>";
-                        $("#mastersApiResult").html(result);
-                    },
-                    error: function (xhr, status, error) {
-                        $("#mastersApiResult").html("<p>Error loading masters: " + error + "</p>");
-                    }
-                });
-            });
-        });
-    </script>
+    <script src="~/js/masters.js" asp-append-version="true"></script>
 }
-<div class="text-center">
-    <h1 class="display-4">@Localizer["Welcome"]</h1>
-    <p class="lead">@Localizer["WelcomeMessage"]</p>
-    <a class="btn btn-primary btn-lg mt-3" asp-controller="Masters" asp-action="Index">@Localizer["ViewMasters"]</a>
-</div>
