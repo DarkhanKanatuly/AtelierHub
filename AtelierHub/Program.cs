@@ -76,7 +76,6 @@ if (!string.IsNullOrEmpty(herokuDbUrl))
 builder.Services.AddDbContext<AtelierHubContext>(options =>
     options.UseNpgsql(connectionString));
 
-// Configure the port for Heroku
 var port = Environment.GetEnvironmentVariable("PORT") ?? "8080";
 builder.WebHost.UseUrls($"http://*:{port}");
 

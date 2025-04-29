@@ -1,29 +1,18 @@
-# 1. Используем SDK-образ для сборки проекта
-FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
-
-# 2. Устанавливаем рабочую директорию
+# 9ka
+FROM mcr.microsoft.com/dotnet/sdk:9.0 AS build
 WORKDIR /app
 
-# 3. Копируем файлы проекта
+# kopi csproj и reink zav
 COPY AtelierHub/*.csproj ./AtelierHub/
-
-# 4. Переходим в папку проекта
 WORKDIR /app/AtelierHub
-
-# 5. Восстанавливаем зависимости
 RUN dotnet restore
 
-# 6. Копируем все остальные файлы
+# kopi ost kod + bild pj
 COPY AtelierHub/. .
+RUN dotnet publish -c Release -o out
 
-# 7. Публикуем проект
-RUN dotnet publish -c Release -o /app/publish
-
-# 8. Используем рантайм-образ
-FROM mcr.microsoft.com/dotnet/aspnet:8.0 AS runtime
-
+# use runtime obraz dlya zapuska
+FROM mcr.microsoft.com/dotnet/aspnet:9.0 AS runtime
 WORKDIR /app
-COPY --from=build /app/publish .
-
-# 9. Стартуем приложение
+COPY --from=build /app/AtelierHub/out ./
 ENTRYPOINT ["dotnet", "AtelierHub.dll"]
