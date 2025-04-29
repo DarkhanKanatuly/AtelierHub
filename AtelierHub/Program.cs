@@ -86,6 +86,9 @@ using (var scope = app.Services.CreateScope())
 {
     var services = scope.ServiceProvider;
     var context = services.GetRequiredService<AtelierHubContext>();
+
+    context.Database.Migrate(); // <--- ЭТА СТРОКА ПРИМЕНИТ МИГРАЦИИ
+
     DbInitializer.Initialize(context);
 }
 
