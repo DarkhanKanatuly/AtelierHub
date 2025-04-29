@@ -56,7 +56,6 @@ builder.Services.AddDataProtection()
     .PersistKeysToFileSystem(new DirectoryInfo("/app/.aspnet/DataProtection-Keys"))
     .SetDefaultKeyLifetime(TimeSpan.FromDays(90));
 
-// Add database context
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
 var herokuDbUrl = Environment.GetEnvironmentVariable("DATABASE_URL");
 
