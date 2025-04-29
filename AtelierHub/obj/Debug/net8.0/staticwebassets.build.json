@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "U3C9R6IgF7UxitSV9/yu6LciBP1pgCN4oqne5W+mCwA=",
+  "Hash": "iMHwO6exS4haxI8AbIqzE8sfhXWepa7SKwfJABoaTT0=",
   "Source": "AtelierHub",
   "BasePath": "_content/AtelierHub",
   "Mode": "Default",
@@ -129,6 +129,25 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot/images/mark-johnson.jpg"
+    },
+    {
+      "Identity": "/Users/darhan/AtelierHub/AtelierHub/wwwroot/js/masters.js",
+      "SourceId": "AtelierHub",
+      "SourceType": "Discovered",
+      "ContentRoot": "/Users/darhan/AtelierHub/AtelierHub/wwwroot/",
+      "BasePath": "_content/AtelierHub",
+      "RelativePath": "js/masters.js",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "PreferTarget",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot/js/masters.js"
     },
     {
       "Identity": "/Users/darhan/AtelierHub/AtelierHub/wwwroot/js/site.js",

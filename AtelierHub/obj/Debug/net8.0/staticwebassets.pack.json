@@ -21,6 +21,10 @@
       "PackagePath": "staticwebassets/images/mark-johnson.jpg"
     },
     {
+      "Id": "/Users/darhan/AtelierHub/AtelierHub/wwwroot/js/masters.js",
+      "PackagePath": "staticwebassets/js/masters.js"
+    },
+    {
       "Id": "/Users/darhan/AtelierHub/AtelierHub/wwwroot/js/site.js",
       "PackagePath": "staticwebassets/js/site.js"
     },
