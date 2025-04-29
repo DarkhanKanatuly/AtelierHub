@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
 using System.Threading.Tasks;
+using AtelierHub.Models;
 
 namespace AtelierHub.Controllers
 {
@@ -14,26 +15,40 @@ namespace AtelierHub.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Login(string username, string password, string returnUrl = null)
+[IgnoreAntiforgeryToken] // Отключил Antiforgery
+public async Task<IActionResult> Login(LoginViewModel model, string returnUrl = null)
+{
+    if (ModelState.IsValid)
+    {
+        if (model.Username == "admin" && model.Password == "password")
         {
-            // Простая проверка (в реальном проекте используй базу данных)
-            if (username == "admin" && password == "password")
+            var claims = new List<Claim>
             {
-                var claims = new List<Claim>
-                {
-                    new Claim(ClaimTypes.Name, username),
-                    new Claim(ClaimTypes.Role, "Admin")
-                };
+                new Claim(ClaimTypes.Name, model.Username),
+                new Claim(ClaimTypes.Role, "Admin")
+            };
 
-                var claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
-                await HttpContext.SignInAsync(new ClaimsPrincipal(claimsIdentity));
-                return Redirect(returnUrl ?? "/");
-            }
+            var claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
+            var authProperties = new AuthenticationProperties
+            {
+                IsPersistent = true,
+                ExpiresUtc = DateTimeOffset.UtcNow.AddMinutes(30)
+            };
 
-            ViewData["Error"] = "Invalid username or password.";
-            return View();
-        }
+            await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme,
+                new ClaimsPrincipal(claimsIdentity),
+                authProperties);
 
+#pragma warning disable CS8604 // Возможно, аргумент-ссылка, допускающий значение NULL.
+                    return LocalRedirect(returnUrl ?? Url.Action("Index", "Home"));
+#pragma warning restore CS8604 // Возможно, аргумент-ссылка, допускающий значение NULL.
+                }
+
+        ModelState.AddModelError(string.Empty, "Invalid login attempt.");
+    }
+
+    return View(model);
+}
         public async Task<IActionResult> Logout()
         {
             await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);

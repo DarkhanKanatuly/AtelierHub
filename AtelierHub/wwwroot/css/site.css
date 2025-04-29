@@ -73,3 +73,16 @@ body {
   max-width: 100px;
   border-radius: 5px;
 }
+body {
+  background-color: #f8f9fa;
+}
+
+.display-4 {
+  font-weight: bold;
+  color: #343a40;
+}
+
+.lead {
+  font-size: 1.25rem;
+  color: #6c757d;
+}

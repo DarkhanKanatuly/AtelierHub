@@ -20,7 +20,7 @@
   <data name="NoMasters" xml:space="preserve">
     <value>No masters available</value>
   </data>
-  <data name="LoadMastersViaApi" xml:space="preserve">
+  <data name="Load Masters Via Api" xml:space="preserve">
     <value>Load Masters via API</value>
   </data>
 </root>
