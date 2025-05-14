@@ -11,12 +11,11 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllersWithViews();
 
 // Настройка PostgreSQL с использованием DATABASE_URL
-var connectionString = builder.Configuration.GetConnectionString("DefaultConnection") 
-    ?? Environment.GetEnvironmentVariable("DATABASE_URL")?.Replace("postgres://", "Host=")
-        .Replace("@", ";Port=5432;Database=")
-        .Replace(":", ";Password=")
-        .Replace("/", ";Username=")
-        + ";SslMode=Require;TrustServerCertificate=True";
+var databaseUrl = builder.Configuration["DATABASE_URL"];
+var databaseUri = new Uri(databaseUrl);
+var userInfo = databaseUri.UserInfo.Split(':');
+
+var connectionString = $"Host={databaseUri.Host};Port={databaseUri.Port};Database={databaseUri.LocalPath.Substring(1)};Username={userInfo[0]};Password={userInfo[1]};SSL Mode=Require;Trust Server Certificate=true;";
         
 var port = Environment.GetEnvironmentVariable("PORT") ?? "80";
 builder.WebHost.UseUrls($"http://*:{port}");
