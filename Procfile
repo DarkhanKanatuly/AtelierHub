@@ -1,0 +1,1 @@
+web: dotnet exec ./AtelierHub.dll
