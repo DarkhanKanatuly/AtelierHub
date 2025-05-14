@@ -1,24 +1,18 @@
-# Используем официальный образ .NET SDK для сборки
+# Stage 1: Build
 FROM mcr.microsoft.com/dotnet/sdk:9.0 AS build
 WORKDIR /app
 
-# Копируем файлы проекта и восстанавливаем зависимости
+# Copy csproj and restore as distinct layers
 COPY *.csproj ./
 RUN dotnet restore
 
-# Копируем остальной код и собираем приложение
+# Copy everything else and build
 COPY . ./
 RUN dotnet publish -c Release -o out
 
-# Используем образ runtime для запуска
+# Stage 2: Run
 FROM mcr.microsoft.com/dotnet/aspnet:9.0 AS runtime
 WORKDIR /app
-COPY --from=build /app/out ./
+COPY --from=build /app/out .
 
-# Указываем порт, который будет использоваться
-ENV ASPNETCORE_URLS=http://+:80
-ENV PORT=80
-EXPOSE 80
-
-# Запускаем приложение
 ENTRYPOINT ["dotnet", "AtelierHub.dll"]
