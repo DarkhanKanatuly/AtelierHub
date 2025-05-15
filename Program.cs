@@ -86,4 +86,9 @@ using (var scope = app.Services.CreateScope())
     db.Database.Migrate();
 }
 
+app.Use(async (context, next) =>
+{
+    Console.WriteLine($"Request Path: {context.Request.Path}");
+    await next.Invoke();
+});
 app.Run();
