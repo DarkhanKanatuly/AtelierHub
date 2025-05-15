@@ -28,7 +28,8 @@ namespace AtelierHub.Controllers
 
         public IActionResult Create()
         {
-            return View();
+            Console.WriteLine("Entering AteliersController.Create GET");
+            return View("~/Views/Ateliers/Create.cshtml");
         }
 
         [HttpPost]

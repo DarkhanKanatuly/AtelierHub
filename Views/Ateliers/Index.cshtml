@@ -9,26 +9,33 @@
     <a asp-action="Create" class="btn btn-primary">Create New</a>
 </p>
 
-<table class="table">
-    <thead>
-        <tr>
-            <th>Name</th>
-            <th>Address</th>
-            <th>Description</th>
-            <th>Actions</th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var atelier in Model)
-        {
+@if (Model.Any())
+{
+    <table class="table">
+        <thead>
             <tr>
-                <td>@atelier.Name</td>
-                <td>@atelier.Address</td>
-                <td>@atelier.Description</td>
-                <td>
-                    <a asp-action="Details" asp-route-id="@atelier.Id">Details</a>
-                </td>
+                <th>Name</th>
+                <th>Address</th>
+                <th>Description</th>
+                <th>Actions</th>
             </tr>
-        }
-    </tbody>
-</table>
+        </thead>
+        <tbody>
+            @foreach (var atelier in Model)
+            {
+                <tr>
+                    <td>@atelier.Name</td>
+                    <td>@atelier.Address</td>
+                    <td>@atelier.Description</td>
+                    <td>
+                        <a asp-action="Details" asp-route-id="@atelier.Id">Details</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+else
+{
+    <p>No ateliers available. Click "Create New" to add one.</p>
+}
