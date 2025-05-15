@@ -4,28 +4,26 @@ using Microsoft.OpenApi.Models;
 using AtelierHub.Data;
 using AtelierHub.Repositories;
 using AtelierHub.Services;
+using Microsoft.AspNetCore.DataProtection;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
-builder.Services.AddRazorPages(); // Добавляем поддержку Razor Pages для Identity
+builder.Services.AddRazorPages();
 
 string connectionString;
 
-// Проверяем, есть ли DATABASE_URL (Heroku)
 var databaseUrl = Environment.GetEnvironmentVariable("DATABASE_URL");
 
 if (!string.IsNullOrEmpty(databaseUrl))
 {
-    // Для Heroku: парсим DATABASE_URL
     var databaseUri = new Uri(databaseUrl);
     var userInfo = databaseUri.UserInfo.Split(':');
     connectionString = $"Host={databaseUri.Host};Port={databaseUri.Port};Database={databaseUri.LocalPath.Substring(1)};Username={userInfo[0]};Password={userInfo[1]};SSL Mode=Require;Trust Server Certificate=true;";
 }
 else
 {
-    // Локальная разработка: берем строку из appsettings.json
     connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
 }
 
@@ -37,7 +35,7 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
 
 builder.Services.AddIdentity<IdentityUser, IdentityRole>(options =>
 {
-    options.SignIn.RequireConfirmedAccount = false; // Отключаем подтверждение email
+    options.SignIn.RequireConfirmedAccount = false;
 })
     .AddEntityFrameworkStores<ApplicationDbContext>()
     .AddDefaultTokenProviders();
@@ -51,9 +49,12 @@ builder.Services.AddSwaggerGen(c =>
     c.SwaggerDoc("v1", new OpenApiInfo { Title = "AtelierHub API", Version = "v1" });
 });
 
+builder.Services.AddDataProtection()
+    .PersistKeysToFileSystem(new DirectoryInfo("/app/data-protection-keys"))
+    .SetApplicationName("AtelierHub");
+
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
@@ -77,9 +78,8 @@ app.UseAuthorization();
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
-app.MapRazorPages(); // Добавляем маршруты для Razor Pages
+app.MapRazorPages();
 
-// Автоматическое применение миграций
 using (var scope = app.Services.CreateScope())
 {
     var db = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
