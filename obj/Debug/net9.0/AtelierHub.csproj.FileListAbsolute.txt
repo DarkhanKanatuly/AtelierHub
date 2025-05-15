@@ -189,7 +189,6 @@
 /Users/darhan/AtelierHub/obj/Debug/net9.0/scopedcss/Views/Shared/_Layout.cshtml.rz.scp.css
 /Users/darhan/AtelierHub/obj/Debug/net9.0/scopedcss/bundle/AtelierHub.styles.css
 /Users/darhan/AtelierHub/obj/Debug/net9.0/scopedcss/projectbundle/AtelierHub.bundle.scp.css
-/Users/darhan/AtelierHub/obj/Debug/net9.0/compressed/oa370fe1f6-b9sayid5wm.gz
 /Users/darhan/AtelierHub/obj/Debug/net9.0/compressed/etn4lwje03-61n19gt1b8.gz
 /Users/darhan/AtelierHub/obj/Debug/net9.0/compressed/3g7r68prto-xtxxf3hu2r.gz
 /Users/darhan/AtelierHub/obj/Debug/net9.0/compressed/k25skb415m-bqjiyaj88i.gz
@@ -268,3 +267,10 @@
 /Users/darhan/AtelierHub/obj/Debug/net9.0/AtelierHub.pdb
 /Users/darhan/AtelierHub/obj/Debug/net9.0/AtelierHub.genruntimeconfig.cache
 /Users/darhan/AtelierHub/obj/Debug/net9.0/ref/AtelierHub.dll
+/Users/darhan/AtelierHub/bin/Debug/net9.0/ru/AtelierHub.resources.dll
+/Users/darhan/AtelierHub/obj/Debug/net9.0/AtelierHub.Resources.Views.Ateliers.Create.ru.resources
+/Users/darhan/AtelierHub/obj/Debug/net9.0/AtelierHub.Resources.Views.Ateliers.Index.ru.resources
+/Users/darhan/AtelierHub/obj/Debug/net9.0/AtelierHub.csproj.GenerateResource.cache
+/Users/darhan/AtelierHub/obj/Debug/net9.0/ru/AtelierHub.resources.cs
+/Users/darhan/AtelierHub/obj/Debug/net9.0/ru/AtelierHub.resources.dll
+/Users/darhan/AtelierHub/obj/Debug/net9.0/compressed/oa370fe1f6-lzxmjlzxs6.gz
