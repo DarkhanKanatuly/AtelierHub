@@ -5,27 +5,11 @@ using AtelierHub.Data;
 using AtelierHub.Repositories;
 using AtelierHub.Services;
 using Microsoft.AspNetCore.DataProtection;
-using Microsoft.AspNetCore.Mvc.Razor;
-using System.Globalization;
-using Microsoft.AspNetCore.Localization;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
-
-builder.Services.AddLocalization(options => options.ResourcesPath = "Resources");
-builder.Services.AddControllersWithViews()
-    .AddViewLocalization(LanguageViewLocationExpanderFormat.Suffix)
-    .AddDataAnnotationsLocalization();
-builder.Services.Configure<RequestLocalizationOptions>(options =>
-{
-    var supportedCultures = new[] { new CultureInfo("en"), new CultureInfo("ru") };
-    options.DefaultRequestCulture = new RequestCulture("ru");
-    options.SupportedCultures = supportedCultures;
-    options.SupportedUICultures = supportedCultures;
-});
-
 builder.Services.AddRazorPages();
 
 string connectionString;
@@ -87,13 +71,6 @@ app.UseHttpsRedirection();
 app.UseStaticFiles();
 
 app.UseRouting();
-
-var supportedCultures = new[] { new CultureInfo("en"), new CultureInfo("ru") };
-var localizationOptions = new RequestLocalizationOptions()
-    .SetDefaultCulture("ru")
-    .AddSupportedCultures(supportedCultures.Select(c => c.Name).ToArray())
-    .AddSupportedUICultures(supportedCultures.Select(c => c.Name).ToArray());
-app.UseRequestLocalization(localizationOptions);
 
 app.UseAuthentication();
 app.UseAuthorization();
