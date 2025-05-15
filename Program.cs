@@ -10,13 +10,24 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 
-// Настройка PostgreSQL с использованием DATABASE_URL
-var databaseUrl = builder.Configuration["DATABASE_URL"];
-var databaseUri = new Uri(databaseUrl);
-var userInfo = databaseUri.UserInfo.Split(':');
+string connectionString;
 
-var connectionString = $"Host={databaseUri.Host};Port={databaseUri.Port};Database={databaseUri.LocalPath.Substring(1)};Username={userInfo[0]};Password={userInfo[1]};SSL Mode=Require;Trust Server Certificate=true;";
-        
+// Проверяем, есть ли DATABASE_URL (Heroku)
+var databaseUrl = Environment.GetEnvironmentVariable("DATABASE_URL");
+
+if (!string.IsNullOrEmpty(databaseUrl))
+{
+    // Для Heroku: парсим DATABASE_URL
+    var databaseUri = new Uri(databaseUrl);
+    var userInfo = databaseUri.UserInfo.Split(':');
+    connectionString = $"Host={databaseUri.Host};Port={databaseUri.Port};Database={databaseUri.LocalPath.Substring(1)};Username={userInfo[0]};Password={userInfo[1]};SSL Mode=Require;Trust Server Certificate=true;";
+}
+else
+{
+    // Локальная разработка: берем строку из appsettings.json
+    connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
+}
+
 var port = Environment.GetEnvironmentVariable("PORT") ?? "80";
 builder.WebHost.UseUrls($"http://*:{port}");
 
@@ -62,7 +73,8 @@ app.UseAuthorization();
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
-    
+
+// Автоматическое применение миграций
 using (var scope = app.Services.CreateScope())
 {
     var db = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
