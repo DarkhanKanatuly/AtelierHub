@@ -16,7 +16,7 @@ namespace AtelierHub.Controllers
         public async Task<IActionResult> Index()
         {
             var ateliers = await _service.GetAllAsync();
-            return View(ateliers);
+            return View("~/Views/Ateliers/Index.cshtml", ateliers);
         }
 
         public async Task<IActionResult> Details(int id)
@@ -41,7 +41,7 @@ namespace AtelierHub.Controllers
                 await _service.AddAsync(atelier);
                 return RedirectToAction(nameof(Index));
             }
-            return View(atelier);
+            return View("~/Views/Ateliers/Create.cshtml", atelier);
         }
     }
 }
