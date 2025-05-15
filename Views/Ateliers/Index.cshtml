@@ -8,24 +8,25 @@
 <p>
     <a asp-action="Create" class="btn btn-primary">Create New</a>
 </p>
+
 <table class="table">
     <thead>
         <tr>
             <th>Name</th>
             <th>Address</th>
             <th>Description</th>
-            <th></th>
+            <th>Actions</th>
         </tr>
     </thead>
     <tbody>
-        @foreach (var item in Model)
+        @foreach (var atelier in Model)
         {
             <tr>
-                <td>@item.Name</td>
-                <td>@item.Address</td>
-                <td>@item.Description</td>
+                <td>@atelier.Name</td>
+                <td>@atelier.Address</td>
+                <td>@atelier.Description</td>
                 <td>
-                    <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-info">Details</a>
+                    <a asp-action="Details" asp-route-id="@atelier.Id">Details</a>
                 </td>
             </tr>
         }
