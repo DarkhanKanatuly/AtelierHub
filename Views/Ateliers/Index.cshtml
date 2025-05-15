@@ -5,31 +5,40 @@
     ViewData["Title"] = Localizer["Title"];
 }
 
-<h1>@Localizer["Title"]</h1>
+<div class="container my-5">
+    <h1>@Localizer["Title"]</h1>
+    <p>
+        <a href="/swagger" class="btn btn-primary">@Localizer["CreateNew"] (через API)</a>
+    </p>
 
-<p>
-    <a asp-action="Create" class="btn btn-primary">@Localizer["CreateNew"]</a>
-</p>
-
-@if (Model.Any())
-{
-    <div class="row">
-        @foreach (var atelier in Model)
-        {
-            <div class="col-md-4 mb-4">
-                <div class="card">
-                    <div class="card-body">
-                        <h5 class="card-title">@atelier.Name</h5>
-                        <p class="card-text"><strong>@Localizer["Address"]:</strong> @atelier.Address</p>
-                        <p class="card-text">@atelier.Description</p>
-                        <a asp-action="Details" asp-route-id="@atelier.Id" class="btn btn-outline-primary">Подробнее</a>
+    @if (Model.Any())
+    {
+        <div class="row">
+            @foreach (var atelier in Model)
+            {
+                <div class="col-md-4 mb-4">
+                    <div class="card">
+                        @if (!string.IsNullOrEmpty(atelier.ImageUrl))
+                        {
+                            <img src="@atelier.ImageUrl" class="card-img-top" alt="@atelier.Name">
+                        }
+                        else
+                        {
+                            <img src="https://source.unsplash.com/random/300x200/?sewing" class="card-img-top" alt="Default Atelier Image">
+                        }
+                        <div class="card-body">
+                            <h5 class="card-title">@atelier.Name</h5>
+                            <p class="card-text"><strong>@Localizer["Address"]:</strong> @atelier.Address</p>
+                            <p class="card-text">@atelier.Description</p>
+                            <a asp-action="Details" asp-route-id="@atelier.Id" class="btn btn-outline-primary">Подробнее</a>
+                        </div>
                     </div>
                 </div>
-            </div>
-        }
-    </div>
-}
-else
-{
-    <p>@Localizer["NoAteliers"]</p>
-}
+            }
+        </div>
+    }
+    else
+    {
+        <p>@Localizer["NoAteliers"]</p>
+    }
+</div>
