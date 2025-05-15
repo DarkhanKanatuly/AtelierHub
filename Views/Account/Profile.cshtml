@@ -1,0 +1,9 @@
+@{
+    ViewData["Title"] = "Профиль";
+}
+
+<div class="container my-5">
+    <h1>Ваш профиль</h1>
+    <p>Имя пользователя: @User.Identity.Name</p>
+    <p><a asp-controller="Account" asp-action="Logout" class="btn btn-danger">Выйти</a></p>
+</div>

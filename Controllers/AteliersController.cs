@@ -33,11 +33,6 @@ namespace AtelierHub.Controllers
             Console.WriteLine("Entering AteliersController.Create GET");
             var viewPath = "~/Views/Ateliers/Create.cshtml";
             Console.WriteLine($"Attempting to render view: {viewPath}");
-            if (!System.IO.File.Exists(viewPath.Replace("~/", "wwwroot/")))
-            {
-                Console.WriteLine("Create.cshtml not found!");
-                return Content("Error: Create.cshtml not found");
-            }
             return View(viewPath);
         }
 

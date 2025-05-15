@@ -1,41 +1,35 @@
 @model IEnumerable<AtelierHub.Models.Atelier>
+@using Microsoft.AspNetCore.Mvc.Localization
+@inject IViewLocalizer Localizer
 @{
-    ViewData["Title"] = "Ateliers";
+    ViewData["Title"] = Localizer["Title"];
 }
 
-<h1>Ateliers</h1>
+<h1>@Localizer["Title"]</h1>
 
 <p>
-    <a asp-action="Create" class="btn btn-primary">Create New</a>
+    <a asp-action="Create" class="btn btn-primary">@Localizer["CreateNew"]</a>
 </p>
 
 @if (Model.Any())
 {
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Name</th>
-                <th>Address</th>
-                <th>Description</th>
-                <th>Actions</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var atelier in Model)
-            {
-                <tr>
-                    <td>@atelier.Name</td>
-                    <td>@atelier.Address</td>
-                    <td>@atelier.Description</td>
-                    <td>
-                        <a asp-action="Details" asp-route-id="@atelier.Id">Details</a>
-                    </td>
-                </tr>
-            }
-        </tbody>
-    </table>
+    <div class="row">
+        @foreach (var atelier in Model)
+        {
+            <div class="col-md-4 mb-4">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">@atelier.Name</h5>
+                        <p class="card-text"><strong>@Localizer["Address"]:</strong> @atelier.Address</p>
+                        <p class="card-text">@atelier.Description</p>
+                        <a asp-action="Details" asp-route-id="@atelier.Id" class="btn btn-outline-primary">Подробнее</a>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
 }
 else
 {
-    <p>No ateliers available. Click "Create New" to add one.</p>
+    <p>@Localizer["NoAteliers"]</p>
 }
